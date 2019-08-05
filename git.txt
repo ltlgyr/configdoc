@@ -1,0 +1,7 @@
+backcode
+git clone path
+git reset --hard  commit
+git push -f
+
+delete branch:
+git push origin --delete  currentbranch
