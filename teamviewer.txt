@@ -1,0 +1,23 @@
+﻿Installed the armhf deb from here.
+
+https://download.teamviewer.com/download/linux/teamviewer-host_armhf.deb
+ sudo dpkg --add-architecture armhf
+ sudo apt-get update
+ sudo apt-get upgrade
+ sudo apt-get -f install
+ sudo apt-get install libxtst6:armhf
+ sudo teamviewer --daemon enable
+
+命令行使用teamviewer
+##启动：
+sudo teamviewer --daemon start
+
+##获取 ID
+teamviewer --info print i
+
+##设置密码
+sudo teamviewer --passwd [NEWPASSWORD]
+
+##停止服务
+sudo teamviewer --daemon stop
+
