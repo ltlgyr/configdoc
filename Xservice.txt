@@ -1,0 +1,8 @@
+ 配置/etc/gdm/custom.conf
+在[xdmcp]下添加这样几句
+Enable=true
+Port=177
+在[security]下添加：
+AllowRoot=true
+AllowRemoteRoot=true
+
