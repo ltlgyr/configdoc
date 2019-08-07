@@ -1,0 +1,17 @@
+1. iwconfig    check the wireless
+2. sudo ifconfig wlan0 up
+3. sudo iwlist wlan0 scan
+4. config  the  wpa_supplicant
+newfile  /etc/my_wpa_supplicant.conf
+ctrl_interface=/var/run/wpa_supplicant
+
+network={
+	ssid="TP-LINK_22E1D2"
+	psk="passwd"
+}
+
+5. qidong  configure file 
+wpa_supplicant -B -i wlan0 -c /etc/my_wpa_supplicant.conf
+
+setting the ip 
+6. ifconfig wlan0 192.168.1.131
