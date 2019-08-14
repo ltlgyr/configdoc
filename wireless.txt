@@ -1,17 +1,38 @@
-1. iwconfig    check the wireless
-2. sudo ifconfig wlan0 up
-3. sudo iwlist wlan0 scan
-4. config  the  wpa_supplicant
-newfile  /etc/my_wpa_supplicant.conf
-ctrl_interface=/var/run/wpa_supplicant
+﻿
+配置无线网络：
+iwlist wlan0  scan
 
+ctrl_interface=/var/run/wpa_supplicant
 network={
-	ssid="TP-LINK_22E1D2"
-	psk="passwd"
+       ssid="ssidname"
+       psk="passwd"
 }
 
-5. qidong  configure file 
-wpa_supplicant -B -i wlan0 -c /etc/my_wpa_supplicant.conf
+sudo wpa_supplicant -B -i wlan0 -c /etc/my_wpa_supplicant.conf
+sudo dhclient wlan0
 
-setting the ip 
-6. ifconfig wlan0 192.168.1.131
+
+无线网络工作模式：
+the wifi mode :
+Managed
+monitor
+ap
+ad hoc
+master
+
+设置monitor模式：
+ifconfig wlan0 down
+iwconfig wlan0 mode monitor
+ifconfig wlan0 up
+
+
+
+
+无限破解技术
+aircrack-ng
+
+iw dev wlan0 interface add mon0 type monitor
+
+airmon-ng的使用连接https://www.aircrack-ng.org/doku.php?id=airmon-ng
+监听技术：
+https://www.aneasystone.com/archives/2016/08/wireless-analysis-one-monitoring.html
