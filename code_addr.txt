@@ -5,3 +5,5 @@ https://github.com/mtconnect/adapter.git              the mtconnect
 https://github.com/LinuxCNC/linuxcnc.git              the linuxcnc code
 
 https://github.com/stephane/libmodbus.git             the modbus code
+
+https://www.open-mpi.org/                             openMPI
