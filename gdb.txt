@@ -43,15 +43,15 @@ info fuctions
 info fuctions regexp（正则表达式）  
 打印所有生命与函数外的变量的名字和数据结构：
 info variables
-info variables regexp （正则表达式）
-
-info classes 
+info variables regexp (正则表达式)
+info locals
+info frame
+info fuctions
+int args
+info registers
+info classes
 info selectors
-
-
 trace  跟踪点：
-
 disable tracepoint 
-
 passcount n num  跟踪点num，第n次执行终止。
 action 
