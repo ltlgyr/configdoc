@@ -1,15 +1,23 @@
 ﻿
-配置无线网络：
+配置无线网：
 iwlist wlan0  scan
 
+/etc/wpa_supplicant/wireless.conf:
 ctrl_interface=/var/run/wpa_supplicant
 network={
        ssid="ssidname"
        psk="passwd"
 }
 
-sudo wpa_supplicant -B -i wlan0 -c /etc/my_wpa_supplicant.conf
+/etc/network/interfaces:
+auto wlan0
+iface wlan0 inet dhcp
+        wpa-conf /etc/wpa_supplicant/wireless.conf
+
+
+sudo wpa_supplicant -B -i wlan0 -c /etc/wpa_supplicant/wireless.conf
 sudo dhclient wlan0
+
 
 
 无线网络工作模式：
