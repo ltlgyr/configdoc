@@ -7,3 +7,7 @@ https://github.com/LinuxCNC/linuxcnc.git              the linuxcnc code
 https://github.com/stephane/libmodbus.git             the modbus code
 
 https://www.open-mpi.org/                             openMPI
+
+http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0802b/UXTB_UBFM.html    the infomation for arm
+
+https://github.com/benhoyt/inih.git                   .ini file 
