@@ -298,3 +298,20 @@ B.EQ
 B.HI
 标号：比较结果是无符号大于，执行标号，否则不跳转
 
+9a 9f 17 e0        cset    x0, eq  // eq = none
+9a 9f 07 e0        cset    x0, ne  // ne = any
+9a 9f b7 e0        cset    x0, ge  // ge = tcont
+9a 9f a7 e0        cset    x0, lt  // lt = tstop
+9a 9f d7 e0        cset    x0, gt
+9a 9f c7 e0        cset    x0, le
+
+------+----------
+ cond | mnemonic 
+------+----------
+ 0001 | EQ       
+ 0000 | NE       
+ 1011 | GE       
+ 1010 | LT       
+ 1101 | GT       
+ 1100 | LE       
+
