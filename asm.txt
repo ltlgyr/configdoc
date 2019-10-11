@@ -1,3 +1,53 @@
+the Processor mode
+CPSR[4:0]
+1. 10000 user
+2. 10001 FIQ   
+3. 10010 IRQ 
+4. 10011 supervisor
+5. 10111 above
+6. 11011 undefined
+7. 11111 system
+
+37 register
+user mod  is  total 17  
+r0-r14    15 
+pc(r15)   1
+cpsr      1
+
+the exception modes: FIQ,IRQ,SVC,ABT,UND
+
+the exception modes 20 
+R13,R14,SPSR_    15
+
+FIQ: r8-r12      5
+
+the CPSR register
+
+N Z C V ....  I F T m m m m m 
+
+F FIQ  1,disable   0,enable
+I IRQ  1,disable   0,enable
+N negative
+z zero
+c carry
+v Overflow
+
+1. 立即数寻址
+ADD R0, R0 #0xef ;  R0 <- R0 +0x3f
+2. 寄存器寻址
+ADD R0, R0 R2;     R0 <- R1 + R2
+3. 寄存器间接寻址
+LDR  R0, [R2] ;   R0 <- [R2]
+4. 基址变址寻址
+LDR R0,[R1, #4];   r0<-[R1 + 4]
+5. 相对寻址
+BL  Next : goto the Next
+...
+Next
+...
+Mov PC,LR;   
+
+
 16位数据操作指令 
 名字 功能
 ADC  带进位加法（ADD with Carry） 
@@ -321,3 +371,5 @@ B.HI
 1100	GT	Z 清零且（N 等于 V）	带符号数大于
 1101	LE	Z 置位或（N 不等于 V）	带符号数小于或等于
 1110	AL	忽略	无条件执行
+
+
