@@ -11,3 +11,5 @@ https://www.open-mpi.org/                             openMPI
 http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0802b/UXTB_UBFM.html    the infomation for arm
 
 https://github.com/benhoyt/inih.git                   .ini file 
+
+http://wiki.100ask.org/Mainpage                       for emb
