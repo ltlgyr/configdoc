@@ -1,0 +1,165 @@
+简要记录 pthread 的API的具体函数参数和功能：
+
+1. pthread_create(头文件什么的自己man，后边的介绍一样)
+
+函数功能：创建线程（实际上就是确定调用该线程函数的入口点），在线程创建以后，就开始运行相关的线程函数。
+
+函数声明：int pthread_create(pthread_t *tidp,const pthread_attr_t *attr,
+
+(void*)(*start_rtn)(void*),void *arg)
+
+参数：
+
+tidp：线程标识符；
+
+attr：线程属性设置；
+
+start_rtn：线程函数的起始地址；
+
+arg：传递给start_rtn的参数；
+
+返回值：若线程创建成功，则返回0。若线程创建失败，则返回出错编号，并且*thread中的内容是未定义的。
+
+
+2. pthread_exit
+
+函数功能：线程通过调用pthread_exit函数终止执行。这个函数的作用是，终止调用它的线程并返回一个指向某个对象的指针。
+
+函数声明：void pthread_exit(void *rval_ptr)
+
+参数：唯一的参数是函数的返回代码，如果rval_ptr参数不为NULL，这个值将被传递给thread_return
+
+返回值：无
+
+
+
+3. pthread_join
+
+函数功能：以阻塞的方式等待thread指定的线程结束。当函数返回时，被等待线程的资源被收回。如果线程已经结束，那么该函数会立即返回。
+
+函数声明： int pthread_join(pthread_t thread, void **retval);
+
+参数：
+
+thread:  标识线程的唯一标识符
+
+retval:  线程返回值
+
+返回值：成功返回0，失败返回错误号。
+
+
+
+
+4. pthread_mutex_init
+
+函数功能：用于互斥锁的初始化
+
+函数声明：int pthread_mutex_init(pthread_mutex_t *restrict mutex, 
+
+       const pthread_mutexattr_t *restrict attr)
+
+参数：
+
+mutex：初始化的互斥锁变量
+
+attr： attr为空的话，则是默认属性，而默认属性的快速互斥锁
+
+返回值：成功返回0，失败返回错误码（其他值）
+
+
+
+5. pthread_mutex_destroy
+
+函数功能：销毁互斥锁
+
+函数声明：int pthread_mutex_destroy(pthread_mutex_t *mutex)
+
+参数：mutex 指向要销毁的互斥锁的指针
+
+返回值：成功返回0，失败返回错误码
+
+
+6. pthread_mutex_lock
+
+函数功能：锁定mutex 所指向的互斥锁
+
+函数声明：int pthread_mutex_lock(pthread_mutex_t *mutex)
+
+参数：mutex 带锁定的互斥锁变量
+
+返回值：成功返回0，失败返回错误码
+
+
+7. pthread_mutex_unlock
+
+函数功能：释放互斥锁，与pthread_mutex_lock成对存在
+
+函数声明：int pthread_mutex_unlock(pthread_mutex_t *mutex)
+
+参数：需要解锁的锁变量对象
+
+返回值：成功返回0，失败返回错误码（一般不对返回值做检测）
+
+
+8. pthread_cond_init
+
+函数功能：初始化一个条件变量
+
+函数声明：extern int pthread_cond_init __P ((pthread_cond_t *__cond, __const pthread_condattr_t *__cond_attr))
+
+参数：
+
+cond:条件变量
+
+cond_attr:设置条件变量的属性
+
+返回值：成功返回0 ，失败返回错误码
+
+
+9. pthread_cond_destroy
+
+函数功能：销毁一个条件变量
+
+函数声明：int pthread_cond_destroy(pthread_cond_t *cond)
+
+参数：cond为销毁条件变量的对象
+
+返回值：成功返回0 ，失败返回错误码
+
+
+10. pthread_cond_signal
+
+函数功能：是发送一个信号给另外一个正在处于阻塞等待状态的线程,使其脱离阻塞状态,继续执行.如果没有线程处在阻塞等待状态,函数也会成功返回
+
+函数声明：int pthread_cond_signal(pthread_cond_t *cond)
+
+参数：cond为待发送的信号对象
+
+返回值：成功返回0 ，失败返回错误码
+
+
+11. pthread_cond_broadcast
+
+函数功能：对所有等待参数cond所指定的条件变量的线程解除阻塞
+
+函数声明：int pthread_cond_broadcast(pthread_cond_t *cond)
+
+参数：cond为待发送的信号对象
+
+返回值：成功返回0 ，失败返回错误码
+
+
+12. pthread_cond_wait
+
+函数功能：等待条件变量，防止竞争
+
+函数声明：int pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex)
+
+参数：
+
+cond：cond为等待条件变量的对象
+
+mutex：mutex 带锁定的互斥锁变量
+
+返回值：成功返回0 ，失败返回错误码
+
