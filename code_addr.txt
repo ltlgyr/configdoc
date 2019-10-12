@@ -13,3 +13,15 @@ http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0802b/UXTB_UBFM.h
 https://github.com/benhoyt/inih.git                   .ini file 
 
 http://wiki.100ask.org/Mainpage                       for emb
+
+http://home.tiscali.cz/~cz210552/webbench.html        web bench 1.5
+
+https://minnie.tuhs.org/cgi-bin/utree.pl?file=V6      unix v6
+
+http://www.netbsd.org/                                netbsd
+
+http://nginx.org/en/download.html                     http lgor Sysoev
+
+https://www.sqlite.org/index.html                     sqlite
+
+
