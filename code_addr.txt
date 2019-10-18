@@ -25,3 +25,12 @@ http://nginx.org/en/download.html                     http lgor Sysoev
 https://www.sqlite.org/index.html                     sqlite
 
 http://www.denx.de/wiki/U-Boot/SourceCode             uboot
+
+http://code.google.com/p/cmockery/downloads/list      unit test
+
+https://github.com/friendlyarm/u-boot.git             u-boot for the friendly arm
+
+https://busybox.net/downloads/                        busybox
+
+https://github.com/friendlyarm/linux.git              friendlyarm kernel
+
