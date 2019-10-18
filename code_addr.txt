@@ -34,3 +34,7 @@ https://busybox.net/downloads/                        busybox
 
 https://github.com/friendlyarm/linux.git              friendlyarm kernel
 
+https://github.com/Ardour/ardour.git                  ardour.git
+
+https://ftp.nluug.nl/pub/graphics/blender/            blender
+https://download.blender.org/release/                 blender
