@@ -1,0 +1,132 @@
+
+if want building uboot, you could look this page
+path : http://wiki.friendlyarm.com/wiki/index.php/Building_U-boot_and_Linux_for_H5/H3/H2%2B
+
+1. cross-compile ：
+download  gcc  tool chain.  
+decompress to  /opt/
+
+config  environment variables
+in /etc/bash.bashrc  add  
+
+PATH=$PATH:/opt/gcc-linaro/bin/
+export ARCH=arm
+export CROSS_COMPILE=arm-linux-gnueabi-
+
+install the package .
+sudo apt-get install swig python-dev python3-dev
+sudo apt-get install  lib32ncurses5   （ia32）
+sudo apt-get install lib32stdc++6    （libstdc++.so.6 =>）
+sudo apt-get install device-tree-compiler   ( need dtc)
+
+2. make img
+part
+Device       Boot  Start     End Sectors  Size Id Type
+/dev/loop1p1       49152  253951  204800  100M 83 Linux
+/dev/loop1p2      253952 2097151 1843200  900M 83 Linux
+
+sudo mkfs.vfat  -F 32 -I /dev/loop1p1
+sudo mkfs.ext4  /dev/loop1p2
+
+
+compile the uboot for h5
+download path : git clone https://github.com/friendlyarm/u-boot.git -b sunxi-v2017.x --depth 1
+make nanopi_h5_defconfig CROSS_COMPILE=aarch64-linux-gnu-
+make CROSS_COMPILE=aarch64-linux-gnu-
+sudo dd if=spl/sunxi-spl.bin of=/dev/loop1 bs=1024 seek=8
+sudo dd if=u-boot.itb of=/dev/loop1 bs=1024 seek=40
+
+file start : boot.cmd
+> # Recompile with:
+> # mkimage -C none -A arm -T script -d boot.cmd boot.scr
+> 
+> setenv fsck.repair yes
+> setenv ramdisk rootfs.cpio.gz
+> setenv kernel Image
+> 
+> setenv env_addr 0x45000000
+> setenv kernel_addr 0x46000000
+> setenv ramdisk_addr 0x47000000
+> setenv dtb_addr 0x48000000
+> 
+> fatload mmc 0 ${kernel_addr} ${kernel}
+> fatload mmc 0 ${ramdisk_addr} ${ramdisk}
+> fatload mmc 0 ${dtb_addr} sun50i-h5-${board}.dtb
+> fdt addr ${dtb_addr}
+> 
+> # setup MAC address 
+> fdt set ethernet0 local-mac-address ${mac_node}
+> 
+> # setup boot_device
+> fdt set mmc${boot_mmc} boot_device <1>
+> 
+> setenv bootargs console=ttyS0,115200 earlyprintk root=/dev/mmcblk0p2 rootfstype=ext4 rw rootwait fsck.repair=${fsck.repair} panic=10 ${extra}
+> booti ${kernel_addr} ${ramdisk_addr}:500000 ${dtb_addr}
+file end 
+
+the /boot on the ~/boot
+create a boot.src:
+tools/kmimage -C none -A arm -T script -d boot.cmd boot.scr 
+sudo cp boot.scr boot.cmd ~/root
+sudo cp rootfs.cpio.gz ~/root
+
+compile the kernel 
+download path : git clone https://github.com/friendlyarm/linux.git -b sunxi-4.14.y --depth 1
+touch .scmversion
+make sunxi_arm64_defconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
+make Image dtbs ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
+
+SD card's boot partition is mounted at "/media/SD/boot/"
+sudo cp arch/arm64/boot/Image ~/root
+sudo cp arch/arm64/boot/dts/allwinner/sun50i-h5-nanopi*.dtb ~/root
+
+
+make modules ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
+SD card's rootfs partition is mounted at "/media/SD/rootfs/"
+sudo make modules_install INSTALL_MOD_PATH=/media/SD/rootfs/ ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- 
+
+3. mkrootfs 
+compart the busybox 
+make menuconfig 
+make 
+sudo make install CONFIG_PREFIX=~/bootfs/
+
+cd ~/bootfs/
+sudo mkdir lib
+sudo mkdir -p usr/lib
+sudo cp  toolchain/aarch64-linux-gnu/libc/lib/*so*  ./lib/ -d
+sudo cp  toolchain/aarch64-linux-gnu/libc/usr/lib/*so*  ./usr/lib/ -d
+
+sudo mkdir  etc/
+sudo vim etc/inittab
+
+file etc/inittab
+> ::sysinit:/etc/init.d/rcS
+> console::respawn:-/bin/sh
+> ::ctrlaltdel:/sbin/reboot
+> ::shutdown:/bin/umount -a -r
+end file 
+
+sudo vim etc/fstab
+file fstab
+> proc       /proc        proc   defaults  0    0
+> sysfs      /sys         sysfs  defaults  0    0
+> tmpfs      /dev         tmpfs  defaults  0    0
+end file
+
+sudo mkdir etc/init.d
+sudo vim etc/init.d/rcS
+file rcS
+> #mount -t proc none /proc
+> mount -a
+> mkdir /dev/pts
+> mount -t devpts devpts /dev/pts
+> echo /sbin/mdev > /proc/sys/kernel/hotplug
+> mdev -s
+end file
+
+sudo mkdir dev
+sudo mknod dev/console c 5 1
+sudo mknod dev/null c 1 3
+
+mkdir proc tmp mnt sys root opt var run
