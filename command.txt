@@ -1,0 +1,40 @@
+stty -F /dev/ttyS0 speed 115200 cs8 -parenb -cstopb  -echo
+losetup
+partprote
+partx
+mount
+vmhgfs
+umount
+
+the command for me 
+git reset --hard 
+git clean -xdf 
+
+review the  video  support
+v4l2-ctl -d /dev/video0 --list-formats
+
+the nameserver
+/etc/resolv.conf
+nameserver 114.114.114.114
+
+linux the wireless config:
+iwlist wlan0 scan
+
+net time :
+ntpdate
+
+unzip the kernel config:
+zcat /proc/config.gz
+
+on back groud:
+nohup/setsid/&
+
+using the nc :
+nc -l -p 9999
+
+review the open file:
+lsof 
+
+inform the OS of partition table changes：
+partprobe  
+partx -dv /dev/loop0:
