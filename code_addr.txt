@@ -5,9 +5,7 @@ https://github.com/mtconnect/adapter.git              the mtconnect
 https://github.com/LinuxCNC/linuxcnc.git              the linuxcnc code
 
 https://github.com/stephane/libmodbus.git             the modbus code
-
-https://www.open-mpi.org/                             openMPI
-
+https://www.open-mpi.org/                             openMPI 
 http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0802b/UXTB_UBFM.html    the infomation for arm
 
 https://github.com/benhoyt/inih.git                   .ini file 
@@ -38,3 +36,5 @@ https://github.com/Ardour/ardour.git                  ardour.git
 
 https://ftp.nluug.nl/pub/graphics/blender/            blender
 https://download.blender.org/release/                 blender
+
+https://github.com/miguelgrinberg/flask-video-streaming.git     the code for python .
