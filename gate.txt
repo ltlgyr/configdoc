@@ -1,0 +1,63 @@
+1.  配置网络
+configure /etc/wpa_supplicant/janus.conf
+ctrl_interface=/var/run/wpa_supplicant
+network={
+       ssid="name"
+       psk="password"
+}
+
+configure  /etc/network/interfaces
+source /etc/network/interfaces.d/*
+# Network is managed by Network manager
+auto lo
+iface lo inet loopback
+
+auto  wlx000f0037adfc
+iface wlx000f0037adfc inet dhcp
+        wpa-conf /etc/wpa_supplicant/janus.conf
+
+auto eth0
+iface eth0 inet static
+        address 192.168.31.10
+        netmask 255.255.255.0
+        geteway 192.168.31.1
+
+2， 配置 dhcp 
+1>apt-get install isc-dhcp-server
+
+2>configure  /etc/default/isc-dhcp-server
+INTERFACES="eth0"
+
+3>配置 /etc/dhcp/dhcpd.conf
+option domain-name "tagpt.mtn";
+default-lease-time 14400;
+max-lease-time 36000;
+
+option domain-name-servers 114.114.114.114, 8.8.8.8;
+
+subnet 192.168.31.0 netmask 255.255.255.0{
+range 192.168.31.20 192.168.31.100;
+option subnet-mask 255.255.255.0;
+option routers 192.168.31.10;
+option broadcast-address 192.168.31.255;
+}
+使配置生效：sudo /etc/init.d/isc-dhcp-server restart
+
+
+
+3.  配置转发：
+
+1>configure /etc/sysctl.conf   
+net.ipv4.ip_forward=1 
+使配置生效： sudo sysctl -p /etc/sysctl.conf
+
+2>wlx000f0037adfc   10.125.50.47   usb wifi 自动分配的
+                     eth0   192.168.31.1   自己设置的
+sudo iptables -t nat -A POSTROUTING -o wlx000f0037adfc -j MASQUERADE
+#sudo iptables -A FORWARD -i eth0 -o wlx000f0037adfc -m state --state RELATED,ESTABLISHED -j ACCEPT
+#qsudo iptables -A FORWARD -i eth0 -o wlx000f0037adfc  -j ACCEPT
+iptables-save >/etc/iptables/rules.v4
+
+3> 
+/etc/rc.local
+/sbin/iptables-restore < /etc/iptables/rules.v4
