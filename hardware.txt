@@ -1,0 +1,18 @@
+ram  random acces memeory 
+rom  read only memeory 
+
+nandflash   
+ 价格低，容量大。适合大容量数据存储，地址线和数据线共用I/O线，全部信息都通过一条线传送。类比于PC的硬盘。
+ 若从nandflash启动。上电后nandflash控制器自己主动把nandflash存储器中的0——4K内容载入到芯片内的起步石（Steppingstone。起步石这个机制是处理器中集成的功能，对程序猿透明），即内部SRAM缓冲器中，同一时候把内部SRAM的起始地址设置为0x0（不同的CPU上电后的PC值不尽同样，对不同的CPU该值也不尽同样），然后把这段片内SRAM映射到nGCS0片选的空间，进而CPU開始从内部SRAM的0x0处開始取得第一条指令，该过程全部是硬件自己主动完毕，不须要程序代码控制。
+
+norflash  
+价格贵。容量小，适合小容量的程序或数据存储，相似硬盘，可是能在当中执行程序。有独立地址线、数据线
+若从norflash启动，则norflash直接被映射到内存的0x0地址处（就是nGCS0。这里就不须要片内SRAM来辅助了。所以片内SRAM的起始地址不变。还是0x40000000）。然后cpu从0x00000000開始执行（也就是在Norfalsh中执行）。
+sdram   主要用于程序执行时的程序存储、执行或计算，类比于PC的内存；
+
+SD卡
+bl0  bl1
+irom
+
+
+
