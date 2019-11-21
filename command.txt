@@ -38,3 +38,8 @@ lsof
 inform the OS of partition table changes：
 partprobe  
 partx -dv /dev/loop0:
+
+alsamixer   chang the audio
+
+update-rc.d apache2 disable
+
