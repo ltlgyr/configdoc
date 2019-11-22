@@ -1,0 +1,34 @@
+
+Keras 有三个后端实现可用: TensorFlow 后端，Theano 后端，CNTK 后端
+
+1. installs package 
+	pip3 install keras
+	pip3 install tensorflow
+	pip3 install theano
+	pip3 install cntk
+
+2. config file
+~/.keras/keras.json
+# this is config for tensorflow
+{
+    "image_data_format": "channels_last",
+    "epsilon": 1e-07,
+    "floatx": "float32",
+    "backend": "tensorflow"
+}
+
+# this is config for Theano
+{
+    "image_data_format": "channels_last",
+    "epsilon": 1e-07,
+    "floatx": "float32",
+    "backend": "theano"
+}
+
+# this is config for CNTK
+{
+    "image_data_format": "channels_last",
+    "epsilon": 1e-07,
+    "floatx": "float32",
+    "backend": "cntk"
+}
