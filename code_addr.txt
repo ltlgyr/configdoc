@@ -40,3 +40,5 @@ https://download.blender.org/release/                 blender
 https://github.com/miguelgrinberg/flask-video-streaming.git     the code for python .
 
 https://github.com/tesseract-ocr/tessdata             tesseract-ocr
+
+https://gstreamer.freedesktop.org/media               for gstream test
