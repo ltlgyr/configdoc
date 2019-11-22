@@ -34,4 +34,5 @@ topic read  mtopic/#
 /usr/sbin/mosquitto -c /etc/mosquitto/mosquitto.conf
 /etc/init.d/mosquitto start
 
-mosquitto_sub  -v -t mtopic -u pi -P 1234
+mosquitto_sub  -v -t mtopic  -u pi -P 1234 (-u is user , -P password)
+mosquitto_pub -h 192.168.1.102 -t mtopic -m "Hello Stonegeek"
