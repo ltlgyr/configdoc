@@ -42,3 +42,5 @@ https://github.com/miguelgrinberg/flask-video-streaming.git     the code for pyt
 https://github.com/tesseract-ocr/tessdata             tesseract-ocr
 
 https://gstreamer.freedesktop.org/media               for gstream test
+
+https://developer.nvidia.com/embedded/downloads/archive    nvidia
