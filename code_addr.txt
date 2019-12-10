@@ -44,3 +44,9 @@ https://github.com/tesseract-ocr/tessdata             tesseract-ocr
 https://gstreamer.freedesktop.org/media               for gstream test
 
 https://developer.nvidia.com/embedded/downloads/archive    nvidia
+
+https://github.com/BVLC/caffe.git                    caffe
+
+https://github.com/NVIDIA/nccl.git                   nccl
+
+https://github.com/CMU-Perceptual-Computing-Lab/openpose.git openpose
