@@ -1,0 +1,17 @@
+1.check nvcc
+~/.bashrc
+export CUDA_HOME=/usr/local/cuda-10.0
+export LD_LIBRARY_PATH=/usr/local/cuda-10.0/lib64:$LD_LIBRARY_PATH
+export PATH=/usr/local/cuda-10.0/bin:$PATH
+source ~/.bashrc
+nvcc -V
+
+2.check opencv 
+pkg-config opencv --modversion
+
+3. check mnistCUDNN
+cd /usr/src/cudnn_samples_v7/mnistCUDNN 
+sudo make     
+sudo chmod a+x mnistCUDNN 
+./mnistCUDNN 
+
