@@ -50,3 +50,5 @@ https://github.com/BVLC/caffe.git                    caffe
 https://github.com/NVIDIA/nccl.git                   nccl
 
 https://github.com/CMU-Perceptual-Computing-Lab/openpose.git openpose
+
+https://github.com/brektrou/rtl8821CU.git            wifi  develop
