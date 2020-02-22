@@ -1,0 +1,33 @@
+[install]
+    sudo apt-get install mysql-server
+    sudo apt-get install mysql-client
+    sudo apt-get install libmysqlclient-dev
+
+[change]
+    sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf
+    [start]
+[mysqld]
+#
+# * Basic Settings
+#
+user            　 = mysql
+pid-file        　 = /var/run/mysqld/mysqld.pid
+socket        　　 = /var/run/mysqld/mysqld.sock
+port            　 = 3306
+basedir        　　= /usr
+datadir       　　 = /var/lib/mysql
+tmpdir       　　　= /tmp
+lc-messages-dir   = /usr/share/mysql
+skip-external-locking
+character-set-server=utf8
+collation-server=utf8_general_ci
+skip-grant-tables　　　　<-- add here
+    [end]
+    service mysql restart
+
+[set db]
+    mysql -u root -p 遇见输入密码的提示直接回车即可;
+    1 use mysql;   然后敲回车
+    2 update user set authentication_string=password("passwd"),plugin='mysql_native_password' where user='root'; 然后敲回车
+    3 flush privileges;  然后敲回车
+
