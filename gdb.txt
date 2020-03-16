@@ -4,10 +4,24 @@ layout split
 
 set disassembly-flavor intel ：改变显示的汇编语法；
 
-layout 显示
+[ layout 显示 ]
+layout src 
+layout asm
+layout regs
+layout split 
+layout next 
+layout prev
+Ctrl + L: 刷新窗口
+Ctrl + x + 1: 单窗口模式，显示一个窗口
+Ctrl + x + 2: 双窗口模式，显示两个窗口
+Ctrl + x a: 回到传统模式，即退出layout，回到执行layout之前的调试窗口
+
+
+[ ptype] 查看变量的类型
+ptype  i 
+
 
 断点设置:
-
 
 多线程调试：
 //1.查看进程：info inferiors
