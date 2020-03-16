@@ -1,0 +1,28 @@
+1. install 
+sudo apt-get install libnginx-mod-rtmp nginx -y
+
+2.configure
+sudo vim /etc/nginx/nginx.conf 
+
+rtmp {
+    server {
+        listen 1935;
+        chunk_size 4096;
+        application hls {
+            live on; 
+            hls on; 
+            hls_path /mnt/hgfs/source/;
+            play /mnt/hgfs/source/;
+            hls_fragment 5s; 
+        }
+    }   
+}
+3.running
+sudo service nginx restart 
+
+4.check
+systemctl status nginx.service
+cat /var/log/nginx/error.log
+fix the /etc/nginx/nginx.conf
+
+5. do 3 and 4 
