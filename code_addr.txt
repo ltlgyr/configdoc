@@ -56,3 +56,5 @@ https://github.com/brektrou/rtl8821CU.git            wifi  develop
 https://www.hyperledger.org/                          hyperledge 
 
 https://github.com/openmv/openmv.git                  openmv
+
+https://github.com/upx/upx.git                        upx
