@@ -1,0 +1,10 @@
+1.install 
+pip install  jupyter
+pip install  jupyter_contrib_nbextensions
+pip install  jupyter_nbextensions_configurator
+
+2.config 
+配置显示
+jupyter contrib nbextension install --user --skip-running-check
+jupyter nbextensions_configurator enable --user
+
