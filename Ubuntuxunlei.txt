@@ -1,0 +1,17 @@
+Ubuntu安装迅雷
+
+安装wine
+sudo apt-get install git
+# 安装deepin-wine
+git clone https://gitee.com/wszqkzqk/deepin-wine-for-ubuntu.git
+cd deepin-wine-for-ubuntu
+./install.sh
+# 安装托盘
+sudo apt install chrome-gnome-shell
+# 安装扩展
+sudo apt install gnome-shell-extensions
+
+安装迅雷
+
+    wget https://mirrors.aliyun.com/deepin/pool/non-free/d/deepin.com.thunderspeed/deepin.com.thunderspeed_7.10.35.366deepin18_i386.deb
+    sudo dpkg -i deepin.com.thunderspeed_7.10.35.366deepin18_i386.deb
