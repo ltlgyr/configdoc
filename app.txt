@@ -1,0 +1,4 @@
+apt-file vim git docker
+ktorrent
+amule
+
