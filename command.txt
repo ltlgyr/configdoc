@@ -43,3 +43,4 @@ alsamixer   chang the audio
 
 update-rc.d apache2 disable
 
+sudo usb_modeswitch -KW -v 0bda -p 1a2b
