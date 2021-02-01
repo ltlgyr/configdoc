@@ -1,0 +1,100 @@
+
+1. 下载镜像：http://cdimage.ubuntu.com/ubuntu-base/releases/18.04.5/release/ubuntu-base-18.04.5-base-arm64.tar.gz
+解压镜像到rootfs
+或者qemu-debootstrap --arch arm64 --variant=minbase --include=whiptail,ca-certificates,tzdata bionic rootfs http://mirrors.ustc.edu.cn/ubuntu-ports/
+
+
+2.配置网络
+mkdir rootfs/etc/netplan/
+cat > rootfs/etc/netplan/50-cloud-init.yaml <<EOF
+network:
+    ethernets:
+        eth0:
+            addresses: []
+            dhcp4: ture
+    version: 2
+EOF
+
+3.修改dns
+cp /etc/resolv.conf rootfs/etc/resolv.conf
+
+4.将系统文件挂在到根文件系统下：
+    sudo mount -t proc /proc rootfs/proc
+    sudo mount -t sysfs /sys rootfs/sys    
+    sudo mount -o bind /dev rootfs/dev
+    sudo mount -t devpts /dev/pts  rootfs/dev/pts
+5.chroot进入系统
+    cp /usr/bin/qemu-aarch64-static rootfs/usr/bin
+    LANG=C.UTF-8 LC_ALL=C.UTF-8 chroot rootfs/  /bin/bash
+6.更新系统，并安装基础软件。
+   apt-get update
+   apt-get upgrade -y
+   apt-get install dialog language-pack-zh-hans language-pack-gnome-zh-hans fonts-noto-cjk-extra  fonts-wqy-zenhei -y
+   apt install sudo rsyslog udev dbus kmod openssh-server netplan.io man wget net-tools sysstat tmux less wireless-regdb crda dosfstools parted rng-tools  net-tools  ethtool wireless-tools   iputils-ping alsa-utils  i2c-tools  vim  -y
+7.修改跟文件系统
+	1>创建smdt用户:   useradd -s '/bin/bash' -m -G adm,sudo smdt
+	2>修改smdt用户的密码: passwd smdt
+	3>修改root用户的密码:  passwd root
+	4>修改主机名:               echo 'ubuntu.smdt' > /etc/hostname
+	5>设置自动更新dns：
+		apt-get install resolvconf
+		dpkg-reconfigure resolvconf
+	6>设置主机入口到/etc/hosts
+		echo "127.0.0.1    localhost"  > /etc/hosts
+		echo "127.0.1.1    smdt" >> /etc/hosts
+	7>设置timezone
+		apt-get install tzdata
+		dpkg-reconfigure tzdata	
+	8>设置串口：
+		echo "# Rockchip FIQ ports" >> /etc/securetty  
+		echo "ttyFIQ0" >> /etc/securetty  
+		sed -i 's/dev-%i.device/%i/g' lib/systemd/system/serial-getty@.service
+	9>将自己的模块拷贝到rootfs/lib/中。
+	10>调音频配置	
+8.安装桌面软件包:
+
+sudo apt-get install lsb-core  fonts-noto-cjk-extra ibus-table-wubi ibus-libpinyin
+apt-get install fonts-arphic-uming  fonts-arphic-ukai fonts-arphic-uming fonts-arphic-ukai  language-pack-gnome-zh-hans 
+
+gnome-user-docs-zh-hans 
+thunderbird-locale-zh-hans
+libreoffice-help-zh-cn
+libreoffice-l10n-zh-cn
+firefox-locale-zh-hans
+
+
+
+
+thunderbird-locale-zh-cn
+sudo apt-get install ubuntu-desktop
+
+apt-get remove ubuntu-release-upgrader-gtk
+apt-get remove gnome-initial-setup
+
+
+9.将自己的kernel模块移到系统中，并卸载文件系统
+    cp -r modules  ~/rootfs/lib
+    sudo umount  ~/rootfs/proc
+    sudo umount  ~/rootfs/sys    
+    sudo umount  ~/rootfs/dev/pts
+    sudo umount  ~/rootfs/dev
+
+10.制作固件：
+  dd if=/dev/zero of=ubuntu-rootfs.img bs=1M count=3069
+  sudo  mkfs.ext4  ubuntu-rootfs.img
+  mkdir  ubuntu-mount 
+  sudo mount ubuntu-rootfs.img ubuntu-mount/
+  sudo cp -rfp  rootfs/*  ubuntu-mount/
+  sudo umount ubuntu-mount/ 
+  e2fsck -p -f ubuntu-rootfs.img
+  resize2fs -M ubuntu-rootfs.img
+
+
+11.追加空间的方法：
+dd if=/dev/zero of=/add.img bs=1M count=4096
+losetup /dev/loop0 /add.img
+mkfs.ext3 /dev/loop0
+losetup -d /dev/loop0
+cat /add.img >> your.img
+e2fsck -f your.img
+resize2fs your.img
