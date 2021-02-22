@@ -1,0 +1,4 @@
+
+1.编译：将警告当做错误处理
+	修改scripts/gcc-wrapper.py
+	将def run_gcc(): 中的interpret_warning(line) 注释掉
