@@ -11,7 +11,7 @@ network:
     ethernets:
         eth0:
             addresses: []
-            dhcp4: ture
+            dhcp4: true
     version: 2
 EOF
 
@@ -26,13 +26,17 @@ cp /etc/resolv.conf rootfs/etc/resolv.conf
 5.chroot进入系统
     cp /usr/bin/qemu-aarch64-static rootfs/usr/bin
     LANG=C.UTF-8 LC_ALL=C.UTF-8 chroot rootfs/  /bin/bash
-6.更新系统，并安装基础软件。
+6.更新系统，并安装语言。
    apt-get update
    apt-get upgrade -y
    apt-get install dialog language-pack-zh-hans language-pack-gnome-zh-hans fonts-noto-cjk-extra  fonts-wqy-zenhei -y
-   apt install sudo rsyslog udev dbus kmod openssh-server netplan.io man wget net-tools sysstat tmux less wireless-regdb crda dosfstools parted rng-tools  net-tools  ethtool wireless-tools   iputils-ping alsa-utils  i2c-tools  vim  -y
 7.修改跟文件系统
-	1>创建smdt用户:   useradd -s '/bin/bash' -m -G adm,sudo smdt
+    一.安装 基础软件包
+    LANG=zh_CN.utf8 LC_ALL=zh_CN.utf8 chroot rootfs/  /bin/bash
+    apt install sudo rsyslog udev dbus kmod openssh-server netplan.io man wget net-tools sysstat tmux less wireless-regdb crda dosfstools parted rng-tools  net-tools  ethtool wireless-tools   iputils-ping alsa-utils  i2c-tools  vim  -y
+
+    二.修改系统
+    	1>创建smdt用户:   useradd -s '/bin/bash' -m -G adm,sudo smdt
 	2>修改smdt用户的密码: passwd smdt
 	3>修改root用户的密码:  passwd root
 	4>修改主机名:               echo 'ubuntu.smdt' > /etc/hostname
@@ -50,23 +54,22 @@ cp /etc/resolv.conf rootfs/etc/resolv.conf
 		echo "ttyFIQ0" >> /etc/securetty  
 		sed -i 's/dev-%i.device/%i/g' lib/systemd/system/serial-getty@.service
 	9>将自己的模块拷贝到rootfs/lib/中。
-	10>调音频配置	
+	10> 配置ssh root登陆
+		echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
+	11>调音频配置	
+
 8.安装桌面软件包:
+
 
 sudo apt-get install lsb-core  fonts-noto-cjk-extra ibus-table-wubi ibus-libpinyin
 apt-get install fonts-arphic-uming  fonts-arphic-ukai fonts-arphic-uming fonts-arphic-ukai  language-pack-gnome-zh-hans 
-
+sudo apt-get install ubuntu-desktop
 gnome-user-docs-zh-hans 
 thunderbird-locale-zh-hans
 libreoffice-help-zh-cn
 libreoffice-l10n-zh-cn
 firefox-locale-zh-hans
-
-
-
-
 thunderbird-locale-zh-cn
-sudo apt-get install ubuntu-desktop
 
 apt-get remove ubuntu-release-upgrader-gtk
 apt-get remove gnome-initial-setup
