@@ -9,3 +9,6 @@ cp complete-dict ~/.vim/tools/pydiction/
 
 2 config:
 let g:pydiction_location='~/.vim/tools/pydiction/complete-dict'
+
+使用快捷键： ctrl+shift+V 粘贴
+
