@@ -5,4 +5,5 @@ cscope的使用
 	-b : 只生成索引文件，不进入cscope的界面
 	-k : 在生成索引文件时，不搜索/usr/include目录
 	-q : 生成cscope.in.out和cscope.po.out文件，加快cscope的索引速度
-2.  
+2. 退出
+	ctrl+D
