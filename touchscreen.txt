@@ -1,0 +1,31 @@
+在触摸屏上单击鼠标右键
+
+很显然，如果您有触摸屏，它无法分辨出您的手指按下表示所有的“单击”都是左键单击，但是如果要右键单击，您可以可以执行。
+
+只需将以下几行添加到InputClass中的/etc/X11/xorg.conf.d/99-calibration.conf 之后的
+
+Option “EmulateThirdButton” “1”
+
+Option “EmulateThirdButtonTimeout” “750”
+
+Option “EmulateThirdButtonMoveThreshold” “30”
+
+因此，例如，您的文件如下所示：
+
+Section “InputClass”
+
+Identifier “calibration”
+
+MatchProduct “stmpe-ts”
+
+Option “Calibration” “3800 120 200 3900”
+
+Option “SwapAxes” “1”
+
+Option “EmulateThirdButton” “1”
+
+Option “EmulateThirdButtonTimeout” “750”
+
+Option “EmulateThirdButtonMoveThreshold” “30”
+
+EndSection
